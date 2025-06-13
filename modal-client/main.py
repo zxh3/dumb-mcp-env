@@ -5,12 +5,15 @@ load_dotenv()
 
 
 def main():
-    image = modal.Image.from_registry("ryan1997/agent-environment:test-4")
+    image = modal.Image.from_registry("ryan1997/agent-environment:test-10", force_build=True)
 
     app = modal.App.lookup("xiaohua-test", create_if_missing=True)
 
-    # uv run python -m uvicorn agent_environment.main:app --host 0.0.0.0 --port 13788
+    entrypoint_args =["uv", "run", "python", "-m", "uvicorn", "agent_environment.main:app", "--host", "0.0.0.0", "--port", "13788"]
+
     sandbox = modal.Sandbox.create(
+        *entrypoint_args,
+        workdir="/agent-environment",
         image=image,
         timeout=50000,
         unencrypted_ports=[13788],

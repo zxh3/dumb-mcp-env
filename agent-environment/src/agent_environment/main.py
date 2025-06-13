@@ -11,6 +11,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 @app.post("/list_tools")
 async def list_tools():
