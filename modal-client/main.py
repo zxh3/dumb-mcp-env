@@ -5,7 +5,7 @@ load_dotenv()
 
 
 def main():
-    image = modal.Image.from_registry("ryan1997/agent-environment:test-10", force_build=True)
+    image = modal.Image.from_registry("ryan1997/agent-environment:test-20")
 
     app = modal.App.lookup("xiaohua-test", create_if_missing=True)
 
