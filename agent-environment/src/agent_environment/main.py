@@ -23,13 +23,13 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/list_tools")
+@app.post("/list-tools")
 async def list_tools():
     async with client:
         return await client.list_tools()
 
 
-@app.post("/call_tool")
+@app.post("/call-tool")
 async def call_tool(request: CallToolRequest):
     async with client:
         return await client.call_tool(request.tool_name, request.tool_args)
