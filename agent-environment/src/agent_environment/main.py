@@ -1,8 +1,8 @@
 import contextlib
 
 from fastapi import FastAPI
-from .mcp_client import client
 from pydantic import BaseModel
+from .mcp_client import client
 
 
 class CallToolRequest(BaseModel):
