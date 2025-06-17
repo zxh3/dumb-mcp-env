@@ -3,23 +3,30 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+PORT = 1984
+
 
 def main():
-    image = modal.Image.from_registry("ryan1997/agent-environment:test-20")
+    image = modal.Image.from_registry("ryan1997/agent-environment:test-25").entrypoint(
+        [
+            "sh",
+            "-c",
+            "cd /agent-environment && uv run python -m uvicorn agent_environment.main:app --host 0.0.0.0 --port 1984",
+        ]
+    )
 
-    app = modal.App.lookup("xiaohua-test", create_if_missing=True)
-
-    entrypoint_args =["uv", "run", "python", "-m", "uvicorn", "agent_environment.main:app", "--host", "0.0.0.0", "--port", "13788"]
+    app = modal.App.lookup(
+        "xiaohua-test",
+        create_if_missing=True,
+    )
 
     sandbox = modal.Sandbox.create(
-        *entrypoint_args,
-        workdir="/agent-environment",
         image=image,
-        timeout=50000,
-        unencrypted_ports=[13788],
+        timeout=3600 * 3,
+        unencrypted_ports=[PORT],
         app=app,
     )
-    tunnel = sandbox.tunnels()[13788]
+    tunnel = sandbox.tunnels()[PORT]
     print(tunnel.url)
 
 
