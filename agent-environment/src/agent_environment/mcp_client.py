@@ -24,14 +24,6 @@ config = {
         # },
         # Third party MCP Servers
         "calculator": {"command": "uvx", "args": ["mcp-server-calculator"]},
-        "youtube": {
-            "command": "npx",
-            "args": ["-y", "youtube-data-mcp-server"],
-            "env": {
-                "YOUTUBE_API_KEY": "AIzaSyADfmMxCQReHkYL-CTmv64j3z936w206Ks",
-                "YOUTUBE_TRANSCRIPT_LANG": "en",
-            },
-        },
     }
 }
 
